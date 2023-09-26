@@ -1,8 +1,8 @@
 ---
 # defaults file for nutanix_role_prism_container_search
-nutanix_host: ""
-nutanix_username: ""
-nutanix_password: ""
-nutanix_port: 9440
-validate_certs: false
-nutanix_debug: false
+nutanix_role_prism_container_search_host: ""
+nutanix_role_prism_container_search_username: ""
+nutanix_role_prism_container_search_password: ""
+nutanix_role_prism_container_search_port: 9440
+nutanix_role_prism_container_search_validate_certs: false
+nutanix_role_prism_container_search_debug: false

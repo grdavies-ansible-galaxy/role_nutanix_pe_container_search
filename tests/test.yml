@@ -1,10 +1,10 @@
 ---
 - hosts: localhost
-  remote_user: root
+  gather_facts: false
   roles:
     - role: ../..
   vars:
-    nutanix_host: 10.38.185.37
-    nutanix_username: admin
-    nutanix_password: nx2Tech165!
-    nutanix_container_search_name: Default
+    nutanix_role_prism_container_search_host: 10.38.11.199
+    nutanix_role_prism_container_search_username: admin
+    nutanix_role_prism_container_search_password: nx2Tech682!
+    nutanix_role_prism_container_search_name: Default
