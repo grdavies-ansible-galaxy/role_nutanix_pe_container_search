@@ -1,20 +1,20 @@
 ---
-# tasks file for nutanix_role_pe_container_search
+# tasks file for role_nutanix_pe_container_search
 # tasks file for nutanix_role_prism_pulse
 - name: Setup connection to Nutanix API
   ansible.builtin.include_role:
     name: grdavies.role_nutanix_prism_api
   vars:
-    role_nutanix_prism_api_host: "{{ nutanix_role_pe_container_search_host }}"
-    role_nutanix_prism_api_username: "{{ nutanix_role_pe_container_search_username }}"
-    role_nutanix_prism_api_password: "{{ nutanix_role_pe_container_search_password }}"
-    role_nutanix_prism_api_port: "{{ nutanix_role_pe_container_search_port }}"
-    role_nutanix_prism_api_validate_certs: "{{ nutanix_role_pe_container_search_validate_certs }}"
-    role_nutanix_prism_api_debug: "{{ nutanix_role_pe_container_search_debug }}"
+    role_nutanix_prism_api_host: "{{ role_nutanix_pe_container_search_host }}"
+    role_nutanix_prism_api_username: "{{ role_nutanix_pe_container_search_username }}"
+    role_nutanix_prism_api_password: "{{ role_nutanix_pe_container_search_password }}"
+    role_nutanix_prism_api_port: "{{ role_nutanix_pe_container_search_port }}"
+    role_nutanix_prism_api_validate_certs: "{{ role_nutanix_pe_container_search_validate_certs }}"
+    role_nutanix_prism_api_debug: "{{ role_nutanix_pe_container_search_debug }}"
 
-- name: Fail if 'nutanix_role_pe_container_search_host' is not a Prism Element cluster
+- name: Fail if 'role_nutanix_pe_container_search_host' is not a Prism Element cluster
   ansible.builtin.fail:
-    msg: "this role can only be run against Prism Element. 'nutanix_role_pe_container_search_host' needs to be set to the VIP of a Nutanix cluster."
+    msg: "this role can only be run against Prism Element. 'role_nutanix_pe_container_search_host' needs to be set to the VIP of a Nutanix cluster."
   when:
     - role_nutanix_prism_api_endpoint_type != 'pe'
 
@@ -22,31 +22,31 @@
   ansible.builtin.uri:
     url: "https://{{ role_nutanix_prism_api_url_base }}/PrismGateway/services/rest/v2.0/storage_containers"
     method: GET
-    validate_certs: "{{ nutanix_role_pe_container_search_validate_certs }}"
+    validate_certs: "{{ role_nutanix_pe_container_search_validate_certs }}"
     body_format: json
     headers:
       Authorization: "{{ role_nutanix_prism_api_auth_string_b64 }}"
     status_code: 200
     return_content: true
-  register: nutanix_role_pe_container_search_containers_list
+  register: role_nutanix_pe_container_search_containers_list
   ignore_errors: false
 
 - name: Search container list for container name and return its uuid
   set_fact:
-    nutanix_role_pe_container_search_found_uuid: "{{ item }}"
-  with_items: "{{ nutanix_role_pe_container_search_containers_list.json | to_json | from_json | json_query(query) }}"
+    role_nutanix_pe_container_search_found_uuid: "{{ item }}"
+  with_items: "{{ role_nutanix_pe_container_search_containers_list.json | to_json | from_json | json_query(query) }}"
   vars:
-    query: "entities[?name=='{{ nutanix_role_pe_container_search_name }}'].storage_container_uuid"
-  when: nutanix_role_pe_container_search_containers_list.json.metadata.total_entities > 0
+    query: "entities[?name=='{{ role_nutanix_pe_container_search_name }}'].storage_container_uuid"
+  when: role_nutanix_pe_container_search_containers_list.json.metadata.total_entities > 0
 
 - name: Container found
   debug:
     msg:
-      "uuid='{{ nutanix_role_pe_container_search_found_uuid }}', container_name='{{ nutanix_role_pe_container_search_name }}' \
-      on Prism Element '{{ nutanix_role_pe_container_rch_host }}'"
-  when: nutanix_role_pe_container_search_found_uuid is defined
+      "uuid='{{ role_nutanix_pe_container_search_found_uuid }}', container_name='{{ role_nutanix_pe_container_search_name }}' \
+      on Prism Element '{{ role_nutanix_pe_container_search_host }}'"
+  when: role_nutanix_pe_container_search_found_uuid is defined
 
 - name: Container not found
   debug:
-    msg: "uuid=null, container_name='{{ nutanix_role_pe_container_search_name }}' on Prism Element '{{ nutanix_role_pe_container_search_host }}'"
-  when: nutanix_role_pe_container_search_found_uuid is not defined
+    msg: "uuid=null, container_name='{{ role_nutanix_pe_container_search_name }}' on Prism Element '{{ role_nutanix_pe_container_search_host }}'"
+  when: role_nutanix_pe_container_search_found_uuid is not defined
