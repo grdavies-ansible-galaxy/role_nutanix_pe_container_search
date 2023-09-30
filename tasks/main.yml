@@ -5,10 +5,10 @@
     name: grdavies.role_nutanix_prism_api
   vars:
     role_nutanix_prism_api_host: "{{ role_nutanix_pe_container_search_host }}"
-    role_nutanix_prism_api_username: "{{ role_nutanix_pe_container_search_username }}"
-    role_nutanix_prism_api_password: "{{ role_nutanix_pe_container_search_password }}"
-    role_nutanix_prism_api_port: "{{ role_nutanix_pe_container_search_port }}"
-    role_nutanix_prism_api_validate_certs: "{{ role_nutanix_pe_container_search_validate_certs }}"
+    role_nutanix_prism_api_host_username: "{{ role_nutanix_pe_container_search_host_username }}"
+    role_nutanix_prism_api_host_password: "{{ role_nutanix_pe_container_search_host_password }}"
+    role_nutanix_prism_api_host_port: "{{ role_nutanix_pe_container_search_host_port }}"
+    role_nutanix_prism_api_host_validate_certs: "{{ role_nutanix_pe_container_search_host_validate_certs }}"
     role_nutanix_prism_api_debug: "{{ role_nutanix_pe_container_search_debug }}"
 
 - name: Fail if 'role_nutanix_pe_container_search_host' is not a Prism Element cluster
@@ -21,7 +21,7 @@
   ansible.builtin.uri:
     url: "https://{{ role_nutanix_prism_api_url_base }}/PrismGateway/services/rest/v2.0/storage_containers"
     method: GET
-    validate_certs: "{{ role_nutanix_pe_container_search_validate_certs }}"
+    validate_certs: "{{ role_nutanix_pe_container_search_host_validate_certs }}"
     body_format: json
     headers:
       Authorization: "{{ role_nutanix_prism_api_auth_string_b64 }}"

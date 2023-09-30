@@ -1,8 +1,8 @@
 ---
 # defaults file for role_nutanix_pe_container_search
 role_nutanix_pe_container_search_host: ""
-role_nutanix_pe_container_search_username: ""
-role_nutanix_pe_container_search_password: ""
-role_nutanix_pe_container_search_port: 9440
-role_nutanix_pe_container_search_validate_certs: false
+role_nutanix_pe_container_search_host_username: ""
+role_nutanix_pe_container_search_host_password: ""
+role_nutanix_pe_container_search_host_port: 9440
+role_nutanix_pe_container_search_host_validate_certs: false
 role_nutanix_pe_container_search_debug: false
